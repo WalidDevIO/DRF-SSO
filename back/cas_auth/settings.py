@@ -140,3 +140,9 @@ LDAP_URI = "ldap://ldap.ifremer.fr"
 LDAP_BASE_DN = "ou=annuaire,dc=ifremer,dc=fr"
 #Organization genavir et UID fourni
 LDAP_USER_FILTER = "(&(o=GENAVIR)(uid={username}))"
+
+#Cookie
+SESSION_COOKIE_SAMESITE = "None"
+SESSION_COOKIE_SECURE = True  # obligatoire avec SAMESITE=None
+CSRF_COOKIE_SAMESITE = "None"
+CSRF_COOKIE_SECURE = True

@@ -4,10 +4,11 @@ from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
-from rest_framework.response import Response
+from django.contrib.auth import login
+from django.shortcuts import redirect
 import time
 from core.models import CustomUser
-from .cas import populate_user, validate_ticket
+from .cas import validate_ticket
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -73,8 +74,6 @@ class CASAuthCallback(APIView):
         if ticket is None:
             raise Exception("Pas de ticket")
         user = validate_ticket(ticket=ticket)
-        return Response({
-            "user": user.username,
-            "name": f"{user.last_name.upper()} {user.first_name}",
-            "service": user.group.name
-        })
+        
+        login(request, user)
+        return redirect('http://localhost:8080')
