@@ -1,4 +1,5 @@
 django
 djangorestframework
 djangorestframework-simplejwt
-django-cas-ng
+django-cors-headers
+requests

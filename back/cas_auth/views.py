@@ -3,7 +3,11 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, Toke
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import AllowAny
+from rest_framework.views import APIView
+from rest_framework.response import Response
 import time
+from core.models import CustomUser
+from .cas import populate_user, validate_ticket
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -34,6 +38,11 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         if username is None or password is None:
             raise PermissionDenied("Vous devez spécifier un nom d'utilisateur et un mot de passe")
 
+        try:
+            CustomUser.objects.get(username=username, specific=True)
+        except CustomUser.DoesNotExist:
+            raise PermissionDenied("Vous n'êtes pas autorisé a vous authentifier de cette façon")
+
         return super().post(request, *args, **kwargs)
 
 class CustomTokenRefreshSerializer(TokenRefreshSerializer):
@@ -57,3 +66,18 @@ class CustomTokenRefreshView(TokenRefreshView):
 
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
+    
+class CASAuthCallback(APIView):
+    def get(self, request, *args, **kwargs):
+        ticket = request.query_params.get('ticket', None)
+        if ticket is None:
+            raise Exception("Pas de ticket")
+        attributes = validate_ticket(ticket=ticket)
+        if attributes is None:
+            raise Exception("Ticket invalide")
+        user = populate_user(attributes[0], attributes[1])
+        return Response({
+            "user": user.username,
+            "name": f"{user.last_name.upper()} {user.first_name}",
+            "service": user.group.name
+        })
