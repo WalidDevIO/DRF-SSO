@@ -72,10 +72,7 @@ class CASAuthCallback(APIView):
         ticket = request.query_params.get('ticket', None)
         if ticket is None:
             raise Exception("Pas de ticket")
-        attributes = validate_ticket(ticket=ticket)
-        if attributes is None:
-            raise Exception("Ticket invalide")
-        user = populate_user(attributes[0], attributes[1])
+        user = validate_ticket(ticket=ticket)
         return Response({
             "user": user.username,
             "name": f"{user.last_name.upper()} {user.first_name}",

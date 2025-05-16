@@ -132,3 +132,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CAS_SERVICE_URL = "http://134.246.147.156:8000/cas/callback"
 CAS_VALIDATE_URL = "https://cas.ifremer.fr/serviceValidate"
+
+#Configuration du LDAP
+#URI du serveur LDAP
+LDAP_URI = "ldap://ldap.ifremer.fr"
+#DN Subtree de l'annuaire
+LDAP_BASE_DN = "ou=annuaire,dc=ifremer,dc=fr"
+#Organization genavir et UID fourni
+LDAP_USER_FILTER = "(&(o=GENAVIR)(uid={username}))"

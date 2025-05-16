@@ -4,15 +4,50 @@ from django.conf import settings
 from core.models import CustomUser, CustomGroup
 from logging import getLogger
 from django.utils import timezone
+from django.conf import settings
+from ldap3 import Server, Connection, ALL, SUBTREE
+
+server = Server(settings.LDAP_URI, get_info=ALL)
+base_dn = settings.LDAP_BASE_DN
+user_filter = settings.LDAP_USER_FILTER
 
 logger = getLogger(__name__)
+
+attributes = ['mail', 'givenname', 'cn', 'title', 'service', 'uid']
+
+def get_user_from_ldap(username):
+    conn = None
+    user = None
+
+    try:
+        conn = Connection(server, auto_bind=True)
+    except Exception as e:
+        logger.error(f"Impossible d'établir la connexion avec le serveur LDAP: {e}")
+
+    if conn:
+        try:
+            conn.search(base_dn, user_filter.format(username=username), attributes=attributes, search_scope=SUBTREE)
+        except Exception as e:
+            logger.error(f"Impossible d'effectuer la recherche sur le serveur LDAP: {e}")
+    
+        if conn.entries:
+            user = conn.entries[0].entry_attributes_as_dict
+            #TODO: Améliorer logique ici
+            user["service"] = next((service[8:] for service in user["service"] if service.startswith("GENAVIR-")), None)
+            if "responsable" in user["title"]:
+                user["group"] = f"CDS-{user['service']}"
+        
+        if conn.bound:
+            conn.unbind()
+
+    return user
 
 def populate_user(username, attributes):
     user, _ = CustomUser.objects.get_or_create(username=username)
     
-    user.first_name = attributes['givenname']
-    user.last_name = attributes['cn']
-    user.email = attributes['mail']
+    user.first_name = attributes['givenName'][0]
+    user.last_name = attributes['cn'][0]
+    user.email = attributes['mail'][0]
     
     group, _ = CustomGroup.objects.get_or_create(name=attributes['service'])
     if not user.group or not user.group.specific:
@@ -23,7 +58,6 @@ def populate_user(username, attributes):
     return user
 
 def validate_ticket(ticket):
-    attributes_dict = {}
     try:
         params = {
             'ticket': ticket,
@@ -38,24 +72,7 @@ def validate_ticket(ticket):
         auth_success = root.find('.//cas:authenticationSuccess', ns)
         if auth_success is not None:
             user = auth_success.find('cas:user', ns).text
-            attributes = auth_success.find('cas:attributes', ns)
-            if attributes is not None:
-                is_cds = False
-                for attr in attributes:
-                    tag = attr.tag.split('}')[-1]
-                    if tag in ['givenname', 'cn', 'mail']:
-                        attributes_dict[tag] = attr.text
-                        
-                    if tag == "service" and attr.text.startswith("GENAVIR-"):
-                        attributes_dict['service'] = attr.text[8:]
-                        
-                    if tag == "title" and "responsable" in attr.text:
-                        is_cds = True
-                        
-                if is_cds:
-                    attributes_dict['service'] = f"CDS-{attributes_dict['service']}"
-                    
-                return (user, attributes_dict)
+            return populate_user(user, get_user_from_ldap(user))
         else:
             error = root.find('.//cas:authenticationFailure', ns)
             code = error.attrib.get('code') if error is not None else "?"
