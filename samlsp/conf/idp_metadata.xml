@@ -1,0 +1,30 @@
+<EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:shibmd="urn:mace:shibboleth:metadata:1.0" xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui" entityID="https://idp-notilus.ifremer.fr/idp">
+<script/>
+<IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol urn:mace:shibboleth:1.0">
+<Extensions>
+<shibmd:Scope regexp="false">ifremer.fr</shibmd:Scope>
+</Extensions>
+<KeyDescriptor use="signing">
+<ds:KeyInfo>
+<ds:X509Data>
+<ds:X509Certificate>MIIDOTCCAiGgAwIBAgIUJHIvjanHJ/092BuBXMzTzbAo+xMwDQYJKoZIhvcNAQEL BQAwITEfMB0GA1UEAwwWaWRwLW5vdGlsdXMuaWZyZW1lci5mcjAeFw0yMTA5MjAw NzM5NTdaFw00MTA5MjAwNzM5NTdaMCExHzAdBgNVBAMMFmlkcC1ub3RpbHVzLmlm cmVtZXIuZnIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC8TSBbTwOn ItmD6gKe9hcUGNEfL+P5gnVoTWsd7xVkXsygjTm6Ek5a2sCzCOukZqe6ACOXV7jg yROsSJ5gaJJ8zHG863sTLNpZIoTz0/rKOEajH1h+/Zyy45a/enLa13MwoIbZX0/f e911W64rR9MwuJCJ65sPHq0QyRNjXs0Hzyv+C0RSBqM7O71IEMXz+PU6A2tTQn7G mG2K42+b/Q1Zebvaqhkbz1fTRJqbOkZoQZc+4XQdKA11RI0LCmaYaRKRZDUxif8Q aXNP/US9m8f1494FxSk7kXd0jCTQux43gHLt7tgWFiwUUInWs7y8OLN+IOcdSmRT Fdgq8bgFIKMnAgMBAAGjaTBnMB0GA1UdDgQWBBTV/E4Yg5cGvH0W/nOgn9dVE9es CDBGBgNVHREEPzA9ghZpZHAtbm90aWx1cy5pZnJlbWVyLmZyhiNpZHAtbm90aWx1 cy5pZnJlbWVyLmZyL2lkcC9tZXRhZGF0YTANBgkqhkiG9w0BAQsFAAOCAQEAbHLH q294OR+SxqUY4AmcsN9NwvNTCKtIac7O+t48YWyJSxUuhvKs4ndh0XlBmy9XhK4c ZBh9R11EvoRmfeXLUUoAo+RV2uPkldGwTQFj6jjmJtURVjzVx+BYMT67fVys/qPd cXFiGstfBdgpVLjUTcDp4UnWOZ9mRGbNIlrlHkT51XKQMm0M81yFx1aVaRHckbG7 uVNAXq6+Fln4Bv3tHR5uwpTahjhuRrCYWm03tb9kR5uZcH9J25CUUn+ABf7MEN1L oOhuyMN0tgfXTsHcxg/vOFyYA8j2379LG1TEflhRlLFL5trfTRSAaTK7PK2xCvHN vQKCbrqiXNuJxGhsyA==</ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+</KeyDescriptor>
+<KeyDescriptor use="encryption">
+<ds:KeyInfo>
+<ds:X509Data>
+<ds:X509Certificate>MIIDOjCCAiKgAwIBAgIVAKOsWjHZrxMGT8UNeI1GqlDz5SHkMA0GCSqGSIb3DQEB CwUAMCExHzAdBgNVBAMMFmlkcC1ub3RpbHVzLmlmcmVtZXIuZnIwHhcNMjEwOTIw MDczOTU4WhcNNDEwOTIwMDczOTU4WjAhMR8wHQYDVQQDDBZpZHAtbm90aWx1cy5p ZnJlbWVyLmZyMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlQVM7re2 uNRBbP7G8n9XdqdI4hisn95HTAjiaRzNTJaATlOhYJyVaA6OUxsy9FmkLyR/du9T zDGrt+vc0GXjqygJozgl3uC68Nze4aX4J9UX2JPVMXv0bZME0y43CraYn13lzscm qR7Q3LfkXRSEeP9DqcJ/2W5+cS8qIycydJHSpTRP9d4gR85a+8Uw5BSn9/RC/hJ+ +55HIsA11CQz29GebKeCJRwqm6zhPWO4xokInUQe16AxSuisxR4bcL/5fidvxQNN Z2BH6ekgueAzOkNsM52m/l6Q7cEhTAOoEesunLm5Ji4GknyJPzv5QGfkqmn9dq3I 73UFQbAKgVNlcwIDAQABo2kwZzAdBgNVHQ4EFgQUoWInj3Gwu0axPoDdnlM57I57 O00wRgYDVR0RBD8wPYIWaWRwLW5vdGlsdXMuaWZyZW1lci5mcoYjaWRwLW5vdGls dXMuaWZyZW1lci5mci9pZHAvbWV0YWRhdGEwDQYJKoZIhvcNAQELBQADggEBADod eZcfszR55EFXOpWsSAlKAwI+pH6wevnGa2h7Zm/deeUsRVfoikZMhCHEsxKJQp3u ZjhEOdGWnDSbz01GMgMUOu+JW+X7OzaRjyiabWjlyEKwrrWEFXFPe7jCmpzngoqN yqipI7/WxQfvh6PWsXW9IF9wvR9ExGQ4oaCqg7Md6MBRBVAc+GXdjExsDGt6HGBz Ko0JB8GVgudyEA5FoCf0MDh1P47E+folb6VPdsHRXqTl4VF2+El9l5krGfHncEeS sRBVSHOo3irn1Tuq36cYe3zrpJ4Aw3DvCZJZV+u+pa9V+Im1/34B2dMfhBFVbAsE DITGLa+ZlPk49DareHA=</ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+</KeyDescriptor>
+<SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://idp-notilus.ifremer.fr/idp/profile/SAML2/POST/SLO"/>
+<SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://idp-notilus.ifremer.fr/idp/profile/SAML2/Redirect/SLO"/>
+<NameIDFormat>urn:mace:shibboleth:1.0:nameIdentifier</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://idp-notilus.ifremer.fr/idp/profile/SAML2/POST/SSO"/>
+<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" Location="https://idp-notilus.ifremer.fr/idp/profile/SAML2/POST-SimpleSign/SSO"/>
+<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://idp-notilus.ifremer.fr/idp/profile/SAML2/Redirect/SSO"/>
+<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://idp-notilus.ifremer.fr/idp/profile/SAML2/SOAP/ECP"/>
+</IDPSSODescriptor>
+</EntityDescriptor>

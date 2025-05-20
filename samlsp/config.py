@@ -15,6 +15,24 @@ class Binding(Enum):
     HTTP_POST_SIMPLE_SIGN = "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign"
     SOAP = "urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
 
+class DigestAlgorithm(Enum):
+    SHA1 = "http://www.w3.org/2000/09/xmldsig#sha1"
+    SHA256 = "http://www.w3.org/2001/04/xmlenc#sha256"
+    SHA512 = "http://www.w3.org/2001/04/xmlenc#sha512"
+    
+    @property
+    def signxml_name(self):
+        return self.name.lower()
+
+class SignatureAlgorithm(Enum):
+    RSA_SHA1 = "http://www.w3.org/2000/09/xmldsig#rsa-sha1"
+    RSA_SHA256 = "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"
+    RSA_SHA512 = "http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"
+    
+    @property
+    def signxml_name(self):
+        return self.name.lower().replace("_", "-")
+
 class SPConfig:
     def __init__(self, data: dict):
         self.entity_id = data["entity_id"]
@@ -24,6 +42,8 @@ class SPConfig:
         self.private_key_path = Path(data["private_key"])
         self.want_assertions_signed = data.get("want_assertions_signed", True)
         self.authn_requests_signed = data.get("authn_requests_signed", True)
+        self.digest_method = data.get("digest_method", DigestAlgorithm.SHA256)
+        self.signature_method = data.get("signature_method", SignatureAlgorithm.RSA_SHA256)
 
         self.signing_cert = self._read_file(self.signing_cert_path)
         self.private_key = self._read_file(self.private_key_path)
@@ -31,6 +51,12 @@ class SPConfig:
     def _read_file(self, path: Path) -> str:
         with open(path, "r") as f:
             return f.read()
+
+    @classmethod
+    def from_file(cls, path: Path):
+        import json
+        with open(path, "r") as f:
+            return cls(json.load(f))
 
 
 class IdPConfig:
@@ -40,11 +66,16 @@ class IdPConfig:
         self.sls_services = {}  # Binding -> URL
         self.signing_cert = None
         self.encryption_cert = None
+        self.want_authn_requests_signed = False
         self._parse(metadata_xml)
 
     def _parse(self, xml_str: str):
         root = ET.fromstring(xml_str)
         self.entity_id = root.attrib.get("entityID")
+        
+        idp_descriptor = root.find(".//md:IDPSSODescriptor", NAMESPACES)
+        if idp_descriptor is not None:
+            self.want_authn_requests_signed = idp_descriptor.attrib.get("WantAuthnRequestsSigned", "false").lower() == "true"
 
         for sso in root.findall(".//md:IDPSSODescriptor/md:SingleSignOnService", NAMESPACES):
             binding = sso.attrib.get("Binding")
@@ -67,3 +98,17 @@ class IdPConfig:
                     self.signing_cert = x509.text.strip()
                 elif use == "encryption":
                     self.encryption_cert = x509.text.strip()
+
+    def get_sso_url(self, preferred: Binding = Binding.HTTP_REDIRECT):
+        return self.sso_services.get(preferred.value)
+
+    def get_sls_url(self, preferred: Binding = Binding.HTTP_REDIRECT):
+        return self.sls_services.get(preferred.value)
+
+    def is_valid(self) -> bool:
+        return self.entity_id is not None and bool(self.sso_services) and self.signing_cert is not None
+
+    @classmethod
+    def from_file(cls, path: Path):
+        with open(path, "r") as f:
+            return cls(f.read())
