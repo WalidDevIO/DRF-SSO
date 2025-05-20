@@ -89,6 +89,6 @@ class AuthnRequest:
         raise NotImplementedError(f"Binding {self.binding} not supported")
 
 
-def create_authn_request(sp: SPConfig, idp: IdPConfig, binding: Binding = Binding.HTTP_REDIRECT) -> tuple[str, str]:
+def create_authn_request(sp: SPConfig, idp: IdPConfig, binding: Binding = Binding.HTTP_REDIRECT) -> tuple[str, str, AuthnRequest]:
     req = AuthnRequest(sp, idp, binding)
     return req.destination, req.render(), req

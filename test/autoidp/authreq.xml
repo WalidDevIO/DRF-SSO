@@ -1,0 +1,13 @@
+
+<samlp:AuthnRequest
+    xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
+    xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
+    ID="_0e461cad663d4af09dd86785f1ff0e40"
+    Version="2.0"
+    IssueInstant="2025-05-20T15:00:11.308369"
+    Destination="https://idp-notilus.ifremer.fr/idp/profile/SAML2/Redirect/SSO"
+    ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+    AssertionConsumerServiceURL="https://daccib-api.genavir.dev/saml/acs/"
+    >
+    <saml:Issuer>https://daccib-api.genavir.dev</saml:Issuer>
+</samlp:AuthnRequest>
