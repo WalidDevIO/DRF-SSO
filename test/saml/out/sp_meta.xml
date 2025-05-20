@@ -1,0 +1,13 @@
+<EntityDescriptor entityID="https://daccib-api.genavir.dev" xmlns="urn:oasis:names:tc:SAML:2.0:metadata">
+  <SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol" AuthnRequestsSigned="true" WantAssertionsSigned="true">
+    <KeyDescriptor use="signing">
+      <KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <X509Data>
+          <X509Certificate>MIIEFzCCAn+gAwIBAgIRAPNrzizCv2XxPJpcpO8umW8wDQYJKoZIhvcNAQELBQAwXTEeMBwGA1UEChMVbWtjZXJ0IGRldmVsb3BtZW50IENBMRkwFwYDVQQLDBB3ZWxvdWF6aUBHQlcwMDgwMSAwHgYDVQQDDBdta2NlcnQgd2Vsb3VhemlAR0JXMDA4MDAeFw0yNTA1MTkxNDUyMThaFw0yNzA4MTkxNDUyMThaMEQxJzAlBgNVBAoTHm1rY2VydCBkZXZlbG9wbWVudCBjZXJ0aWZpY2F0ZTEZMBcGA1UECwwQd2Vsb3VhemlAR0JXMDA4MDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAL7Toh2Bb2XBlyIhK3hceS2ZYtLNuphu+OLAo1KD8GGfmKFtm8/OfF1RJ4Yc1vPe6D0vFjTZVYiyVUtvxC28BpmzM6erjd7O5K9Ix8Q2+nj31D+e3LcUJkvj6CR2E0jJ4eDH1wcnBrIGZ/gPUXjcRmZk5lpBb6k2RfPeWH5PUKmDXgFslr1Vx48WiXb9LfyXGmN1LjqVazTy/IIfQOU9+wa0WEUaGHjjD82Xyb443bEfW+V4xsqmU+GGjT4VNRGf8KlD7cz7WUycPpoEzYvwls7NiG4w31lYwP/tYv7m4iIQ4gLvK4Z32nuLZUzS9Xw9Aj1eFUteBMbzQ8ZSKw68iJECAwEAAaNrMGkwDgYDVR0PAQH/BAQDAgWgMBMGA1UdJQQMMAoGCCsGAQUFBwMBMB8GA1UdIwQYMBaAFNEo64nPbrNcSYaFkhzv8wMA9OulMCEGA1UdEQQaMBiCFmRhY2NpYi1hcGkuZ2VuYXZpci5kZXYwDQYJKoZIhvcNAQELBQADggGBAEuN9DeABbTvvSx05mVocAXVJi6wy0JpxShp4aIgRPAsJm0Vmd+tabA0ND5+b4k27nZdsQm0J3foLT6aBi+Wa25iRDNkqayH2xasELWRk0n9ZSo5hwWHh5+eAFkFXLDyvbmD+CFUIP2dKwkkanqhyKQBmSOMkaDR/ahYLLT9YZuDHBlhAJ+P0nQSw+jhy7M4mnFGl4PlfeAf1wWXsFCPptMFDhstUAUxvk0aNNN39IjkcQ+qb3Rp2AOk/4GuQk64nPPioVq27w9VnLbbNhL/8rHhIMgwB8DkAKUvxMCUrklGdGTOHoI6TzKBxj1e8MzcDESSd9Iu0/94+Bph1HugiOMVFvWPh7V21BPh7GE3rXu9OJg+2VzVl6Bc9Kj5tuPOhi0wco8hWwmTsjJWj8E4YFPDDUjsaHf4z+VyWXOkzu7kyttdxcH2HbMoebBQXZ2RYpp/b+iQIQ1ttFi5OQ6xAEmx7BE9J+8y6gDYDoc5/xIn5HyAYmYaFOXhwZVSyxHTAQ==</X509Certificate>
+        </X509Data>
+      </KeyInfo>
+    </KeyDescriptor>
+    <AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://daccib-api.genavir.dev/saml/acs/" index="1" />
+    
+  </SPSSODescriptor>
+</EntityDescriptor>

@@ -6,6 +6,7 @@ from samlsp import SAMLSP
 from samlsp.config import Binding
 
 from .providers import SP, IDP, CERTS_DIR
+import json
 
 app = FastAPI()
 
@@ -25,9 +26,9 @@ async def acs(SAMLResponse: str = Form(...)):
                 <h1>Authenticated</h1>
                 <p><strong>User:</strong> {response.get_subject()}</p>
                 <p><strong>Attributes:</strong></p>
-                <pre>{response.get_attributes()}</pre>
+                <pre>{json.dumps(response.get_attributes(), indent=4)}</pre>
                 <p><strong>SessionIndex:</strong> {response.get_session_index()}</p>
-                <p><strong>Conditions:</strong> {response.get_conditions()}</p>
+                <p><strong>Conditions:</strong> {json.dumps(response.get_conditions(), indent=4)}</p>
             """
         else:
             debug = "<h1>Invalid SAML Response</h1>"

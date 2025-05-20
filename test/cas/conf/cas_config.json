@@ -1,0 +1,5 @@
+{
+    "service_url": "https://daccib-api.genavir.dev/sso/cas/",
+    "login_url": "https://cas.ifremer.fr/login",
+    "validate_url": "https://cas.ifremer.fr/serviceValidate"
+}
