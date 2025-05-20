@@ -1,5 +1,5 @@
 from signxml import XMLVerifier, XMLSigner
-import xml.etree.ElementTree as ET
+import lxml.etree as ET
 from .config import SPConfig, IdPConfig
 
 class XmlSignUtils:    
@@ -13,6 +13,7 @@ class XmlSignUtils:
         signer = XMLSigner(
             digest_algorithm=digest_algorithm,
             signature_algorithm=signature_algorithm,
+            c14n_algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"
         )
         dom = ET.fromstring(xml.encode())
         signed = signer.sign(dom, key=private_key.encode(), cert=cert.encode())

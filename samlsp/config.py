@@ -1,4 +1,4 @@
-import xml.etree.ElementTree as ET
+import lxml.etree as ET
 from pathlib import Path
 from enum import Enum
 
@@ -70,7 +70,7 @@ class IdPConfig:
         self._parse(metadata_xml)
 
     def _parse(self, xml_str: str):
-        root = ET.fromstring(xml_str)
+        root = ET.fromstring(xml_str.encode())
         self.entity_id = root.attrib.get("entityID")
         
         idp_descriptor = root.find(".//md:IDPSSODescriptor", NAMESPACES)
@@ -112,3 +112,10 @@ class IdPConfig:
     def from_file(cls, path: Path):
         with open(path, "r") as f:
             return cls(f.read())
+
+    @classmethod
+    def from_url(cls, url: str):
+        import requests
+        response = requests.get(url)
+        response.raise_for_status()
+        return cls(response.text)

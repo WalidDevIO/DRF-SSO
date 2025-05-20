@@ -1,5 +1,5 @@
 import base64
-import xml.etree.ElementTree as ET
+import lxml.etree as ET
 from typing import Optional
 from datetime import datetime, timezone
 from .config import NAMESPACES, SPConfig, IdPConfig
