@@ -41,4 +41,4 @@ if __name__ == "__main__":
     import uvicorn
     ssl_cert = CERTS_DIR / Path("cert.pem")
     ssl_key = CERTS_DIR / Path("key.pem")
-    uvicorn.run("test.saml.sp_test:app", host="0.0.0.0", port=443, ssl_keyfile=str(ssl_key), ssl_certfile=str(ssl_cert))
+    uvicorn.run("test.saml.mock_server:app", host="0.0.0.0", port=443, ssl_keyfile=str(ssl_key), ssl_certfile=str(ssl_cert))
