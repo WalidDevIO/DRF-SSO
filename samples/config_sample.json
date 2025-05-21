@@ -3,10 +3,17 @@
     "sso_module_base_uri": "http://localhost:8000/sso/",
     "providers": {
         "saml": {
+            "title": "Se connecter via le portail Ifremer (SAML)",
             "type": "SAML",
             "config": "<chemin du json de config saml>  ou dict de conf"
         },
+        "cas": {
+            "title": "Se connecter via le portail Ifremer (CAS)",
+            "type": "CAS",
+            "config": "<chemin du json de config cas> ou dict de conf"
+        },
         "m365": {
+            "title": "Se connecter via M365",
             "type": "OIDC",
             "config": "<chemin du json de config oidc microsoft> ou dict de conf"
         }

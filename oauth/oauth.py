@@ -11,14 +11,14 @@ class OAuthImpl:
             self._load_conf(conf)
             
     def _load_conf(self, conf: dict):
-        self.scopes = conf['scopes']
-        self.authorization_url = conf['authorization_url']
-        self.redirect_uri = conf['redirect_uri']
+        self.scopes = conf['scopes'] #Pas besoin pour openid
+        self.authorization_url = conf['authorization_url'] #Pas besoin pour openid
+        self.redirect_uri = conf['redirect_uri'] #Pas besoin tout court
         self.client_id = conf['client_id']
         self.client_secret = conf['client_secret']
-        self.token_url = conf['token_url']
-        self.user_info_url = conf['user_info_url']
-        self.extra_authorzation = conf.get('extra_authorization', None)
+        self.token_url = conf['token_url'] #Pas besoin pour openid
+        self.user_info_url = conf['user_info_url'] #Pas besoin pour openid
+        self.extra_authorzation = conf.get('extra_authorization', None) #Pas besoin pour openid
         
     def get_login_url(self):
         params = {
