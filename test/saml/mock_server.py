@@ -6,7 +6,7 @@ from samlsp import SAMLSP
 from samlsp.config import Binding
 
 from .providers import SP, IDP, CERTS_DIR
-import json
+import json, traceback
 
 app = FastAPI()
 
@@ -33,7 +33,7 @@ async def acs(SAMLResponse: str = Form(...)):
         else:
             debug = "<h1>Invalid SAML Response</h1>"
     except Exception as e:
-        debug = f"<h1>Error parsing response</h1><pre>{str(e)}</pre>"
+        debug = f"<h1>Error parsing response</h1><h3>Exception: {str(e)}</h3><pre>{traceback.format_exc()}</pre>"
 
     return HTMLResponse(content=debug)
 

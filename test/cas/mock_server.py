@@ -1,7 +1,7 @@
 from pathlib import Path
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, RedirectResponse
-import json
+import json, traceback
 from .providers import CERTS_DIR, CAS
 
 app = FastAPI()
@@ -24,7 +24,7 @@ async def acs(ticket: str):
         else:
             debug = "<h1>Invalid CAS Response</h1>"
     except Exception as e:
-        debug = f"<h1>Error parsing response</h1><pre>{str(e)}</pre>"
+        debug = f"<h1>Error parsing response</h1><h3>Exception: {str(e)}</h3><pre>{traceback.format_exc()}</pre>"
 
     return HTMLResponse(content=debug)
 

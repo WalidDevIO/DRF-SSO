@@ -1,5 +1,3 @@
-from .providers import CONF
-from oauth import OAuth
+from .providers import OAUTH
 
-instance = OAuth(CONF)
-print(instance.get_login_url())
+print(OAUTH.get_login_url())

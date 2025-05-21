@@ -1,6 +1,6 @@
 from pathlib import Path
 from urllib.parse import urlencode
-import json
+import json, requests
 
 class OAuthImpl:
     def __init__(self, conf: Path|dict):
@@ -30,3 +30,22 @@ class OAuthImpl:
         if self.extra_authorzation is not None:
             params.append(self.extra_authorzation)
         return f"{self.authorization_url}?{urlencode(params)}"
+    
+    def exchange_code(self, code: str):
+        data = {
+            "client_id": self.client_id,
+            "client_secret": self.client_secret,
+            "grant_type": "authorization_code",
+            "code": code,
+            "redirect_uri": self.redirect_uri,
+        }
+        headers = {"Content-Type": "application/x-www-form-urlencoded"}
+        response = requests.post(self.token_url, data=data, headers=headers)
+        response.raise_for_status()
+        return response.json()
+    
+    def get_userinfo(self, access_token: str) -> dict:
+        headers = {"Authorization": f"Bearer {access_token}"}
+        response = requests.get(self.user_info_url, headers=headers)
+        response.raise_for_status()
+        return response.text
