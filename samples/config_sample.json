@@ -1,5 +1,5 @@
 {
-    "frontend_callback_uri": "http://localhost:5173",
+    "frontend_callback_uri": "http://localhost:5173/access",
     "sso_module_base_uri": "http://localhost:8000/sso/",
     "providers": {
         "saml": {
