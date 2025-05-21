@@ -1,0 +1,14 @@
+{
+    "frontend_callback_uri": "http://localhost:5173",
+    "sso_module_base_uri": "http://localhost:8000/sso/",
+    "providers": {
+        "saml": {
+            "type": "SAML",
+            "config": "<chemin du json de config saml>  ou dict de conf"
+        },
+        "m365": {
+            "type": "OIDC",
+            "config": "<chemin du json de config oidc microsoft> ou dict de conf"
+        }
+    }
+}

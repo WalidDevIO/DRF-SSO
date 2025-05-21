@@ -1,0 +1,4 @@
+[
+    "http://localhost:8000/sso/saml/login",
+    "http://localhost:8000/sso/m365/login"
+]
