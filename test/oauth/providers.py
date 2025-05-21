@@ -5,13 +5,13 @@ from oauth import OAuth
 load_dotenv(".env.local")
 
 CONF = {
-    "authorization_url": "https://accounts.google.com/o/oauth2/v2/auth",
+    "authorization_url": "https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize",
     "redirect_uri": "http://localhost:8000/sso/oauth/callback/",
     "scopes": ["openid", "email", "profile"],
-    "client_id": os.getenv("GOOGLE_ID"),
-    "client_secret": os.getenv("GOOGLE_SECRET"),
-    "token_url": "https://oauth2.googleapis.com/token",
-    "user_info_url": "https://openidconnect.googleapis.com/v1/userinfo"
+    "client_id": os.getenv("M365_ID"),
+    "client_secret": os.getenv("M365_SECRET"),
+    "token_url": "https://login.microsoftonline.com/organizations/oauth2/v2.0/token",
+    "user_info_url": "https://graph.microsoft.com/oidc/userinfo"
 }
 
 OAUTH = OAuth(CONF)
