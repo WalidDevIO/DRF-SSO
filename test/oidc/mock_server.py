@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, RedirectResponse
-from .providers import OIDC
+from .classic_providers import OIDC
 import json, traceback
 
 app = FastAPI()

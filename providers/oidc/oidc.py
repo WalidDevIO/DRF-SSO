@@ -14,10 +14,11 @@ class OIDCImpl:
         self._load_public_keys()
             
     def _load_conf(self, conf: dict):
-        self.redirect_uri = conf['redirect_uri'] #Pas besoin tout court
+        self.redirect_uri = conf['redirect_uri']
         self.client_id = conf['client_id']
         self.client_secret = conf['client_secret']
         self.manifest_uri = conf['manifest_uri']
+        self.scopes = conf.get('scopes', ['openid', 'profile', 'email'])
         
     def _load_from_manifest(self):
         response = requests.get(self.manifest_uri)
@@ -45,7 +46,7 @@ class OIDCImpl:
         params = {
             "client_id": self.client_id,
             "redirect_uri": self.redirect_uri,
-            "scope": "openid",
+            "scope": "openid email",
             "response_type": "code",
         }
         return f"{self.authorization_url}?{urlencode(params)}"

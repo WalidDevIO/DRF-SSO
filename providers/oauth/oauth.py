@@ -15,6 +15,7 @@ class OAuthImpl:
         self.client_secret = conf['client_secret']
         self.authorization_url = conf['authorization_url']
         self.token_url = conf['token_url']
+        self.redirect_uri = conf['redirect_uri']
         self.user_info_url = conf['user_info_url']
         self.scopes = conf.get('scopes', ['openid', 'profile', 'email'])
         self.extra_authorzation = conf.get('extra_authorization', None)

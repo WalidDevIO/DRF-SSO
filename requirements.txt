@@ -6,6 +6,7 @@ lxml
 signxml
 dotenv
 djangorestframework
+djangorestframework_simplejwt
 
 # Testing dependencies (for mock server)
 fastapi
