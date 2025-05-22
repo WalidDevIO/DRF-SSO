@@ -7,7 +7,7 @@ setup(
     author='EL OUAZIZI Walid',
     author_email='walid.elouazizi29@gmail.com',
     url='https://github.com/WalidDevIO/drf-sso',
-    packages=find_packages(),
+    packages=find_packages(exclude=['test', 'samples']),
     include_package_data=False,
     install_requires=[
         'requests',
