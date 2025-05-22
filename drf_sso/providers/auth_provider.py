@@ -49,7 +49,7 @@ class AuthProvider(ABC):
         def callback_view(request):
             payload = self.validate_response(request)
             #Création/Maj utilisateurn utilisateur
-            user = self.populate_user(payload)
+            user = self.populate_user(payload, self.name)
             #Création du token de handover
             handover = handover_from_user(user)
             return redirect(f"{self.frontend_url}?handover={handover}")

@@ -3,7 +3,7 @@ from .oauth import OAuth
 
 class OAuthProvider(AuthProvider):
     def __init__(self, title: str, name: str, conf: dict):
-        super().__init__(title, name, conf['populate_user'])
+        super().__init__(title, name, conf.get('populate_user', 'drf_sso.providers.user_population.base_user_population'))
         self._init_provider_api(conf['config'])
 
     def _init_provider_api(self, config: dict):
