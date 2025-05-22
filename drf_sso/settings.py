@@ -4,16 +4,7 @@ from django.core.exceptions import ImproperlyConfigured
 DEFAULTS = {
     "MODULE_BASE_URL": None,
     "FRONTEND_CALLBACK_URL": None,
-    "PROVIDERS": {},
-    "BASE_USER_POPULATION": {
-        "LOOKUP_FIELD": ("email", "email"),
-        "MAPPINGS": {
-            "sn": "last_name",
-            "givenname": "first_name",
-            "email": "email",
-            "username": "username"
-        }
-    }
+    "PROVIDERS": {}
 }
 
 class DRFSSOSettings:
