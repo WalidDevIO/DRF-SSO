@@ -13,5 +13,5 @@ def get_providers():
 def get_provider_urls():
     urlpatterns = []
     for provider in get_providers():
-        urlpatterns.append(*provider.get_routes())
+        urlpatterns += provider.get_routes()
     return urlpatterns
