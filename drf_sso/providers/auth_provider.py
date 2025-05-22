@@ -27,7 +27,7 @@ class AuthProvider(ABC):
         self.frontend_url = api_settings.FRONTEND_CALLBACK_URL
         self.title = title
         self.name = name
-        self.populate_user = import_module(populate_user)
+        self.populate_user = import_function(populate_user)
         
     @abstractmethod
     def get_login_url(self) -> str:
@@ -35,10 +35,6 @@ class AuthProvider(ABC):
     
     @abstractmethod
     def validate_response(self, request) -> dict:
-        pass
-
-    @abstractmethod
-    def populate_user(self, payload: dict):
         pass
 
     def get_routes(self):
