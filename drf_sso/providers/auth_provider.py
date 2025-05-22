@@ -23,7 +23,8 @@ class AuthProvider(ABC):
     def __init__(self, title: str, name: str, populate_user: str):
         if self.__class__ == AuthProvider:
             raise TypeError("Vous ne pouvez pas instancier la classe abstraite AuthProvider")
-        self.base_url = f"{api_settings.MODULE_BASE_URL}/{name}/"
+        middle_separator = '' if api_settings.MODULE_BASE_URL.endswith('/') else '/'
+        self.base_url = f"{api_settings.MODULE_BASE_URL}{middle_separator}{name}/"
         self.frontend_url = api_settings.FRONTEND_CALLBACK_URL
         self.title = title
         self.name = name
