@@ -1,0 +1,5 @@
+recursive-exclude test *
+global-exclude *.md
+global-exclude *.txt
+global-exclude .gitignore
+global-exclude *.pyc
