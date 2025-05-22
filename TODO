@@ -1,4 +1,1 @@
-- Contrats communs des providers
-- Configuration de la lib
-- Vues (Par providers + récupération des URLs de login de chacun des providers)
-- Configuration des providers
+- Configuration des providers OIDC => Ok, OAuth => Ok, SAML => A faire, CAS => A faire

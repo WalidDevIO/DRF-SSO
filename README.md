@@ -6,8 +6,8 @@ Librairie permettant de mettre en oeuvre du SSO sur une app full-stack utilisant
 
 - CAS - Supporté
 - SAMLv2 - Supporté (Pas encore toutes les features (SLS, Relay, Vérification des ID req/response))
-- OAuth - TODO
-- OIDC - TODO
+- OAuth - Supporté
+- OIDC - Supporté
 
 ## Configuration
 

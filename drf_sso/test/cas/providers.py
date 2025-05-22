@@ -1,4 +1,4 @@
-from cas import CAS as _CAS
+from drf_sso.providers.cas import CAS as _CAS
 from pathlib import Path
 
 BASE_DIR = Path("test", "cas")

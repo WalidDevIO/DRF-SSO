@@ -12,8 +12,8 @@ from enum import Enum, auto
 from importlib import import_module
 
 # Local imports
-from handover import handover_from_user
-from settings import api_settings
+from drf_sso.handover import handover_from_user
+from drf_sso.settings import api_settings
 from .cas_provider import CASProvider
 from .saml_provider import SAMLProvider
 from .oauth_provider import OAuthProvider
