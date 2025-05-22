@@ -18,7 +18,7 @@ def login_methods(request):
     routes = [
         {
             "title": provider.title,
-            "url": f"{provider.base_url}login/"
+            "url": provider.get_login_url()
         }
         for provider in get_providers()
     ]

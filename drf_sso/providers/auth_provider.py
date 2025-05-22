@@ -38,12 +38,7 @@ class AuthProvider(ABC):
     def validate_response(self, request) -> dict:
         pass
 
-    def get_routes(self):
-        @api_view(["GET"])
-        @permission_classes([AllowAny])
-        def login_view(request):
-            return redirect(self.get_login_url())
-        
+    def get_path(self):        
         @api_view(["GET"])
         @permission_classes([AllowAny])
         def callback_view(request):
@@ -52,9 +47,6 @@ class AuthProvider(ABC):
             user = self.populate_user(payload, self.name)
             #Création du token de handover
             handover = handover_from_user(user)
-            return redirect(f"{self.frontend_url}?handover={handover}")
+            return redirect(f"{self.frontend_url}/{handover}")
         
-        return [
-            path(f"{self.name}/login/", login_view, name=f"sso-{self.name}-login"),
-            path(f"{self.name}/callback/", callback_view, name=f"sso-{self.name}-validate")
-        ]
+        return path(f"{self.name}/callback/", callback_view, name=f"sso-{self.name}-validate")
