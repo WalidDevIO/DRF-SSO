@@ -1,4 +1,14 @@
 [
-    "http://localhost:8000/sso/saml/login",
-    "http://localhost:8000/sso/m365/login"
+    {
+        "title": "Se connecter via le portail Ifremer (SAML)",
+        "url": "http://localhost:8000/sso/saml/login"
+    },
+    {
+        "title": "Se connecter via le portail Ifremer (CAS)",
+        "url": "http://localhost:8000/sso/cas/login"
+    },
+    {
+        "title": "Se connecter via M365",
+        "url": "http://localhost:8000/sso/m365/login"
+    }
 ]

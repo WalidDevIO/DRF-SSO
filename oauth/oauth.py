@@ -11,14 +11,13 @@ class OAuthImpl:
             self._load_conf(conf)
             
     def _load_conf(self, conf: dict):
-        self.scopes = conf['scopes'] #Pas besoin pour openid
-        self.authorization_url = conf['authorization_url'] #Pas besoin pour openid
-        self.redirect_uri = conf['redirect_uri'] #Pas besoin tout court
         self.client_id = conf['client_id']
         self.client_secret = conf['client_secret']
-        self.token_url = conf['token_url'] #Pas besoin pour openid
-        self.user_info_url = conf['user_info_url'] #Pas besoin pour openid
-        self.extra_authorzation = conf.get('extra_authorization', None) #Pas besoin pour openid
+        self.authorization_url = conf['authorization_url']
+        self.token_url = conf['token_url']
+        self.user_info_url = conf['user_info_url']
+        self.scopes = conf.get('scopes', ['openid', 'profile', 'email'])
+        self.extra_authorzation = conf.get('extra_authorization', None)
         
     def get_login_url(self):
         params = {
@@ -48,4 +47,4 @@ class OAuthImpl:
         headers = {"Authorization": f"Bearer {access_token}"}
         response = requests.get(self.user_info_url, headers=headers)
         response.raise_for_status()
-        return response.text
+        return response.json()

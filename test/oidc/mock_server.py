@@ -1,18 +1,18 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, RedirectResponse
-from .providers import ODIC
-import json, base64, traceback
+from .providers import OIDC
+import json, traceback
 
 app = FastAPI()
 
 @app.get("/", response_class=RedirectResponse)
 async def index():
-    return ODIC.get_login_url()
+    return OIDC.get_login_url()
 
 @app.get("/sso/oauth/callback/", response_class=HTMLResponse)
 async def oauth(code: str):
     try:
-        payload = ODIC.get_id_token(code)
+        payload = OIDC.get_id_token(code)
         debug = f"""
             <h1>Authenticated</h1>
             <p><strong>ID TOKEN :</strong></p>
@@ -24,4 +24,4 @@ async def oauth(code: str):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("test.odic.mock_server:app", host="0.0.0.0", port=8000)
+    uvicorn.run("test.oidc.mock_server:app", host="0.0.0.0", port=8000)

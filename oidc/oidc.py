@@ -3,7 +3,7 @@ from urllib.parse import urlencode
 import jwt.algorithms
 import json, requests, jwt
 
-class ODICImpl:
+class OIDCImpl:
     def __init__(self, conf: Path|dict):
         if isinstance(conf, Path):
             with open(conf, 'r') as file:
@@ -39,9 +39,7 @@ class ODICImpl:
     def _verify_token(self, token):
         kid = jwt.get_unverified_header(token)['kid']
         key = self.public_keys[kid]
-        return jwt.decode(token, key=key, algorithms=['RS256'], options={
-            "verify_aud": False
-        })
+        return jwt.decode(token, key=key, algorithms=['RS256'], audience=self.client_id)
         
     def get_login_url(self):
         params = {
@@ -64,4 +62,5 @@ class ODICImpl:
         response = requests.post(self.token_url, data=data, headers=headers)
         response.raise_for_status()
         token = response.json()['id_token']
+        print(token)
         return self._verify_token(token)
