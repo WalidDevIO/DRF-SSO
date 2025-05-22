@@ -3,8 +3,8 @@ from drf_sso.settings import api_settings
 
 User = get_user_model()
 
-(payload_lookup, db_lookup) = api_settings['BASE_USER_POPULATION']['LOOKUP_FIELD']
-mappings = api_settings['BASE_USER_POPULATION']['MAPPINGS']
+(payload_lookup, db_lookup) = api_settings.BASE_USER_POPULATION['LOOKUP_FIELD']
+mappings = api_settings.BASE_USER_POPULATION['MAPPINGS']
 
 def base_user_population(payload, name):
     populate_user_conf = api_settings.PROVIDERS[name].get('populate_user_conf', None)
