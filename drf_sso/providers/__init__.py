@@ -1,6 +1,8 @@
-from django.urls import include, path
+from drf_sso.settings import api_settings
 from .auth_provider import AuthProvider
-from settings import api_settings
+from .registry import from_config
+
+setattr(AuthProvider, "from_config", from_config)
 
 def get_providers():
     return [
