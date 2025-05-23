@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "drf-sso"
+version = "0.0.1-beta"
+description = "Module Django DRF pour une authentification SSO via CAS, OIDC, SAML, etc."
+authors = [
+  { name = "EL OUAZIZI Walid", email = "walid.elouazizi29@gmail.com" }
+]
+requires-python = ">=3.8"
+readme = "README.md"
+license = "MIT"
+keywords = ["django", "drf", "sso", "cas", "saml", "oidc", "auth"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Framework :: Django",
+  "Operating System :: OS Independent"
+]
+dependencies = [
+  "requests",
+  "pyjwt",
+  "django",
+  "lxml",
+  "signxml",
+  "dotenv",
+  "djangorestframework",
+  "djangorestframework_simplejwt"
+]
+
+[tool.setuptools.packages.find]
+include = ["drf_sso"]
+exclude = ["samples", "tests*"]
+
+[project.optional-dependencies]
+test = [
+  "fastapi",
+  "uvicorn"
+]
+
+[project.urls]
+Homepage = "https://github.com/WalidDevIO/drf-sso"
