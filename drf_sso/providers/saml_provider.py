@@ -22,7 +22,7 @@ class SAMLProvider(AuthProvider):
             (_, url, _) = self.provider.get_login_request()
             return redirect(url)
         
-        @api_view(["GET"])
+        @api_view(["POST"])
         @permission_classes([AllowAny])     
         def callback_view(request):
             payload = self.validate_response(request)
