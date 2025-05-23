@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "drf-sso-dev-internal"
-version = "0.0.1-beta"
+version = "0.0.1b1"
 description = "Django DRF module for SSO authentication using CAS, OIDC, SAML, etc. Under development, use at your own risks"
 authors = [
   { name = "EL OUAZIZI Walid", email = "contact@walidlab.dev" }
@@ -29,8 +29,8 @@ dependencies = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["drf_sso"]
-exclude = ["samples", "tests*"]
+include = ["drf_sso", "drf_sso*"]
+exclude = ["tests", "samples", "test*", "*/test*", "*.test*", "*_test*", "scripts"]
 
 [project.optional-dependencies]
 test = [
