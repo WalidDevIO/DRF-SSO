@@ -1,2 +1,1 @@
-- Configuration des providers OIDC => Ok, OAuth => Ok, SAML => A faire, CAS => A faire
-- Populate user par défaut + Exception en cas de config d'un provider incorrect
+- Gestion des erreurs propre
