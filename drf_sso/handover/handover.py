@@ -6,6 +6,10 @@ from datetime import datetime
 User = get_user_model()
 
 def handover_from_user(user, duration=5):
+    
+    if user is None or user.__class__ != User:
+        raise Exception("User is not a valid django user model")
+    
     payload = {
         "exp": datetime.now().timestamp() + duration,
         "sub": user.pk
