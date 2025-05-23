@@ -38,7 +38,7 @@ class AuthProvider(ABC):
     def validate_response(self, request) -> dict:
         pass
 
-    def get_path(self):        
+    def get_routes(self):        
         @api_view(["GET"])
         @permission_classes([AllowAny])
         def callback_view(request):
@@ -49,4 +49,4 @@ class AuthProvider(ABC):
             handover = handover_from_user(user)
             return redirect(f"{self.frontend_url}/{handover}")
         
-        return path(f"{self.name}/callback/", callback_view, name=f"sso-{self.name}-validate")
+        return [path(f"{self.name}/callback/", callback_view, name=f"sso-{self.name}-validate")]
