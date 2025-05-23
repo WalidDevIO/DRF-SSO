@@ -1,3 +1,5 @@
+⚠️ **ATTENTION : Cette librairie est expérimentale. Ne pas utiliser en production. Aucun support ni garantie.**
+
 # DRF-SSO
 
 Librairie permettant de mettre en oeuvre du SSO sur une app full-stack utilisant Django Rest Framework comme backend.
