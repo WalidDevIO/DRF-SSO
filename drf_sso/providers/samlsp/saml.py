@@ -9,6 +9,8 @@ class SAMLSP:
             self.sp = SPConfig.from_file(sp_config)
         elif isinstance(sp_config, str):
             self.sp = SPConfig.from_file(Path(sp_config))
+        elif isinstance(sp_config, dict):
+            self.sp = SPConfig(sp_config)
         else:
             self.sp = sp_config
         
