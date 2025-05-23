@@ -3,19 +3,33 @@
     "sso_module_base_uri": "http://localhost:8000/sso/",
     "providers": {
         "saml": {
-            "title": "Se connecter via le portail Ifremer (SAML)",
+            "title": "Se connecter via SAML",
             "type": "SAML",
-            "config": "<chemin du json de config saml>  ou dict de conf"
+            "config": {
+                "idp_meta_url": "https://example.idp.com/saml/metadata",
+                "sp": {
+                    "entity_id": "https://example.my_sp.com",
+                    "signing_cert": "path/to/my/cert.pem",
+                    "private_key": "path/to/my/key.pem"
+                }
+            }
         },
         "cas": {
-            "title": "Se connecter via le portail Ifremer (CAS)",
+            "title": "Se connecter via CAS",
             "type": "CAS",
-            "config": "<chemin du json de config cas> ou dict de conf"
+            "config": {
+                "login_url": "https://cas.example.com/login",
+                "validate_url": "https://cas.example.com/serviceValidate"
+            }
         },
         "m365": {
-            "title": "Se connecter via M365",
+            "title": "Se connecter via Open ID Connect",
             "type": "OIDC",
-            "config": "<chemin du json de config oidc microsoft> ou dict de conf"
+            "config": {
+                "client_id": "<ID Client OAuth>",
+                "client_secret": "<Client secret>",
+                "manifest_uri": "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration"
+            }
         }
     }
 }

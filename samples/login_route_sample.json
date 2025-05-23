@@ -1,14 +1,14 @@
 [
     {
-        "title": "Se connecter via le portail Ifremer (SAML)",
+        "title": "Se connecter via SAML",
         "url": "http://localhost:8000/sso/saml/login"
     },
     {
-        "title": "Se connecter via le portail Ifremer (CAS)",
-        "url": "http://localhost:8000/sso/cas/login"
+        "title": "Se connecter via CAS",
+        "url": "https://cas.example.com/login?service=<...>"
     },
     {
-        "title": "Se connecter via M365",
-        "url": "http://localhost:8000/sso/m365/login"
+        "title": "Se connecter via Open ID Connect",
+        "url": "https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize?client_id=<...>&scopes=openid%20email&redirect_uri=<...>"
     }
 ]
