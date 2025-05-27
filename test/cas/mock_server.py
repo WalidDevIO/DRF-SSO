@@ -13,13 +13,12 @@ async def index():
 @app.get("/sso/cas/", response_class=HTMLResponse)
 async def acs(ticket: str):
     try:
-        (username, attributes) = CAS.validate_ticket(ticket)
-        if username is not None:
+        payload = CAS.validate_ticket(ticket)
+        if payload is not None:
             debug = f"""
                 <h1>Authenticated</h1>
-                <p><strong>User:</strong> {username}</p>
-                <p><strong>Attributes:</strong></p>
-                <pre>{json.dumps(attributes, indent=4)}</pre>
+                <p><strong>Payload:</strong></p>
+                <pre>{json.dumps(payload, indent=4)}</pre>
             """
         else:
             debug = "<h1>Invalid CAS Response</h1>"

@@ -14,6 +14,4 @@ class CASProvider(AuthProvider):
         return self.provider.get_login_url()
     
     def validate_response(self, request):
-        (username, attributes) = self.provider.validate_ticket(request.query_params.get('ticket'))
-        attributes['username'] = username
-        return attributes
+        return self.provider.validate_ticket(request.query_params.get('ticket'))
