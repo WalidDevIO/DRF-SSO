@@ -6,7 +6,6 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from .handover import user_from_handover
-from .settings import api_settings
 
 User = get_user_model()
 
@@ -34,7 +33,7 @@ def get_tokens_from_handover(request):
     
     try:
         user = user_from_handover(handover)
-    except ExpiredSignatureError|InvalidSignatureError|User.DoesNotExist:
+    except (ExpiredSignatureError,InvalidSignatureError,User.DoesNotExist):
         return Response({"detail": "Le handover token fourni est invalide."})
         
     tokens = RefreshToken.for_user(user)

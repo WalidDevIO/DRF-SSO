@@ -13,6 +13,7 @@ from importlib import import_module
 # Local imports
 from drf_sso.handover import handover_from_user
 from drf_sso.settings import api_settings
+from drf_sso.exception import PopulationException
 
 def import_function(path: str):
     module_path, function_name = path.rsplit('.', 1)
@@ -43,10 +44,13 @@ class AuthProvider(ABC):
         @permission_classes([AllowAny])
         def callback_view(request):
             payload = self.validate_response(request)
-            #Création/Maj utilisateurn utilisateur
-            user = self.populate_user(payload, self.name)
-            #Création du token de handover
-            handover = handover_from_user(user)
+            #Création/Maj utilisateur
+            try:
+                user = self.populate_user(payload, self.name)
+                #Création du token de handover
+                handover = handover_from_user(user)
+            except PopulationException as e:
+                handover = "err:" + e.details
             return redirect(f"{self.frontend_url}/{handover}")
         
         return [path(f"{self.name}/callback/", callback_view, name=f"sso-{self.name}-validate")]
