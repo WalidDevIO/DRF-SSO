@@ -46,7 +46,7 @@ class OIDCImpl:
         params = {
             "client_id": self.client_id,
             "redirect_uri": self.redirect_uri,
-            "scope": "openid email",
+            "scope": " ".join(self.scopes),
             "response_type": "code",
         }
         return f"{self.authorization_url}?{urlencode(params)}"
