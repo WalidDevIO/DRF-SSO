@@ -3,6 +3,10 @@ from urllib.parse import urlencode
 import jwt.algorithms
 import json, requests, jwt
 
+from logging import getLogger
+
+logger = getLogger(__name__)
+
 class OIDCImpl:
     def __init__(self, conf: Path|dict):
         if isinstance(conf, Path):
@@ -61,7 +65,7 @@ class OIDCImpl:
         }
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         response = requests.post(self.token_url, data=data, headers=headers)
+        logger.debug(f"Response from OIDC IdP: {response.json()}")
         response.raise_for_status()
         token = response.json()['id_token']
-        print(token)
         return self._verify_token(token)
