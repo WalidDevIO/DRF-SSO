@@ -9,6 +9,7 @@ from rest_framework.permissions import AllowAny
 # Standard library imports
 from abc import ABC, abstractmethod
 from importlib import import_module
+from urllib.parse import urlencode
 
 # Local imports
 from drf_sso.handover import handover_from_user
@@ -44,13 +45,17 @@ class AuthProvider(ABC):
         @permission_classes([AllowAny])
         def callback_view(request):
             payload = self.validate_response(request)
+            query_params = {}
             #Création/Maj utilisateur
             try:
-                user = self.populate_user(payload, self.name)
+                user, params = self.populate_user(payload, self.name)
+                query_params.update(params or {})
                 #Création du token de handover
                 handover = handover_from_user(user)
             except PopulationException as e:
-                handover = "err:" + e.details
-            return redirect(f"{self.frontend_url}/{handover}")
+                handover = ""
+                query_params['err'] = e.details
+                
+            return redirect(f"{self.frontend_url}/{handover}?{urlencode(query_params)}")
         
         return [path(f"{self.name}/callback/", callback_view, name=f"sso-{self.name}-validate")]
