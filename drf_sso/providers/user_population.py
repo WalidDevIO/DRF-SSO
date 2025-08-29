@@ -11,8 +11,8 @@ def base_user_population(payload, name):
     except KeyError:
         raise ImproperlyConfigured(f'Provider "{name}" is using default user population method but doesn\'t provide a valid configuration.')
     
-    user = User.objects.get_or_create(**{db_lookup: payload[payload_lookup]})
+    user, created = User.objects.get_or_create(**{db_lookup: payload[payload_lookup]})
     for payload_field, db_field in mappings.items():
         setattr(user, db_field, payload[payload_field])
     user.save()
-    return user
+    return user, {"created": created}

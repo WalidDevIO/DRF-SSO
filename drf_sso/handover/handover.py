@@ -12,15 +12,14 @@ def handover_from_user(user, duration=5):
     
     payload = {
         "exp": datetime.now().timestamp() + duration,
-        "sub": user.pk
+        "sub": str(user.pk)
     }
     
     return jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
 
 def user_from_handover(token):
     payload = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'], options={
-        "require": ['sub', 'exp'],
-        "verify_sub": False
+        "require": ['sub', 'exp']
     })
     
     return User.objects.get(pk=payload['sub'])
