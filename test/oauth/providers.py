@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from oauth import OAuth
+from drf_sso.providers.oauth import OAuth
 
 load_dotenv(".env.local")
 

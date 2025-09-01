@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, RedirectResponse
+from requests import HTTPError
 from .providers import OAUTH
 import json, base64, traceback
 
@@ -26,6 +27,8 @@ async def oauth(code: str):
             <p><strong>JWT OIDC Content</strong></p>
             <pre>{json.dumps(id_jwt_json, indent=4)}</pre>
         """
+    except HTTPError as e:
+        debug = f"<h1>HTTP Error</h1><h3>Status Code: {e.response.status_code}</h3><pre>{e.response.text}</pre>"
     except Exception as e:
         debug = f"<h1>Error parsing response</h1><h3>Exception: {str(e)}</h3><pre>{traceback.format_exc()}</pre>"
     return HTMLResponse(content=debug)
