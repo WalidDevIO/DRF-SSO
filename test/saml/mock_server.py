@@ -1,26 +1,22 @@
 from pathlib import Path
 from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse
+from drf_sso.providers.samlsp.config import Binding
 
-from samlsp import SAMLSP
-from samlsp.config import Binding
-
-from .providers import SP, IDP, CERTS_DIR
+from .providers import SAMLSP, CERTS_DIR
 import json, traceback
 
 app = FastAPI()
 
-saml = SAMLSP(SP, IDP)
-
 @app.get("/", response_class=HTMLResponse)
 async def index():
-    _, html, _ = saml.get_login_request(binding=Binding.HTTP_POST)
+    _, html, _ = SAMLSP.get_login_request(binding=Binding.HTTP_POST)
     return html
 
 @app.post("/saml/acs/", response_class=HTMLResponse)
-async def acs(SAMLResponse: str = Form(...)):
+async def acs(SAMLResponse: str = Form(...), RelayState: str = Form(...)):
     try:
-        response = saml.parse_response(SAMLResponse)
+        response = SAMLSP.parse_response(SAMLResponse, relay_state=RelayState)
         if response.is_valid():
             debug = f"""
                 <h1>Authenticated</h1>
@@ -31,7 +27,7 @@ async def acs(SAMLResponse: str = Form(...)):
                 <p><strong>Conditions:</strong> {json.dumps(response.get_conditions(), indent=4)}</p>
             """
         else:
-            debug = "<h1>Invalid SAML Response</h1>"
+            debug = f"<h1>Invalid SAML Response</h1><p>RelayState: {RelayState}</p><p>SAMLResponse: {SAMLResponse}</p>"
     except Exception as e:
         debug = f"<h1>Error parsing response</h1><h3>Exception: {str(e)}</h3><pre>{traceback.format_exc()}</pre>"
 

@@ -48,7 +48,7 @@ class SAMLProvider(AuthProvider):
         response = request.data.get("SAMLResponse")
         if response is None:
             raise Exception("SAML Response not found.")
-        response = self.provider.parse_response(response)
+        response = self.provider.parse_response(response, relay_state=request.data.get("RelayState"))
         if not response.is_valid():
             raise Exception("SAML Response invalid.")
         

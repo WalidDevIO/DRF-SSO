@@ -1,6 +1,7 @@
 import uuid
 import zlib
 import base64
+import jwt
 from datetime import datetime
 from urllib.parse import urlencode
 
@@ -32,6 +33,20 @@ class AuthnRequest:
         self.destination = idp.get_sso_url(binding)
         self._raw_xml = self._build_xml()
         self._signed_xml = None
+        
+    def _build_secure_relay_state(self) -> str:
+        now = datetime.now().timestamp()
+        return jwt.encode(
+            payload={
+                "sp_entity_id": self.sp.entity_id,
+                "idp_entity_id": self.idp.entity_id,
+                "request_id": self.id,
+                "iat": now,
+                "exp": now + 120,
+            },
+            key=self.sp.private_key,
+            algorithm="RS256"
+        )
 
     def _build_xml(self) -> str:
         return AUTHN_REQUEST_TEMPLATE.format(
@@ -69,13 +84,14 @@ class AuthnRequest:
 
     def to_http_redirect(self) -> str:
         b64 = self.get_encoded()
-        return f"{self.destination}?{urlencode({'SAMLRequest': b64})}"
+        return f"{self.destination}?{urlencode({'SAMLRequest': b64, 'RelayState': self._build_secure_relay_state()})}"
 
     def to_http_post_form(self) -> str:
         b64 = self.get_encoded()
         return f"""
         <form method='post' action='{self.destination}'>
             <input type='hidden' name='SAMLRequest' value='{b64}'/>
+            <input type='hidden' name='RelayState' value='{self._build_secure_relay_state()}'/>
             <input type='submit' value='Continue'/>
         </form>
         <script>document.forms[0].submit();</script>

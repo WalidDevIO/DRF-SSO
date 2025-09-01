@@ -2,5 +2,6 @@
     "entity_id": "https://daccib-api.genavir.dev",
     "acs_url": "https://daccib-api.genavir.dev/saml/acs/",
     "signing_cert": "test/saml/conf/certs/cert.pem",
-    "private_key": "test/saml/conf/certs/key.pem"
+    "private_key": "test/saml/conf/certs/key.pem",
+    "public_key": "test/saml/conf/certs/key.pub"
 }

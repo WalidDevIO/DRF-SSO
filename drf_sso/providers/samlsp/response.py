@@ -1,12 +1,14 @@
 import base64
+import jwt
 import lxml.etree as ET
+from pathlib import Path
 from typing import Optional
 from datetime import datetime, timezone
 from .config import NAMESPACES, SPConfig, IdPConfig
 from .xmlsign_utils import XmlSignUtils
 
 class SAMLResponse:
-    def __init__(self, b64_response: str, sp: SPConfig, idp: IdPConfig):
+    def __init__(self, b64_response: str, sp: SPConfig, idp: IdPConfig, relay_state: Optional[str] = None):
         self.sp = sp
         self.idp = idp
         self.xml = base64.b64decode(b64_response.encode())
@@ -16,9 +18,13 @@ class SAMLResponse:
         self.attributes = {}
         self.conditions = {}
         self.session_index = None
-        self._parse()
+        self._parse(relay_state=relay_state)
 
-    def _parse(self):
+    def _parse(self, relay_state: Optional[str] = None):
+        self.relay_state = relay_state
+        
+        self.in_response_to = self.root.attrib.get("InResponseTo")
+        
         nameid_elem = self.assertion.find(".//saml:Subject/saml:NameID", NAMESPACES)
         self.subject = nameid_elem.text if nameid_elem is not None else None
 
@@ -40,6 +46,18 @@ class SAMLResponse:
 
     def is_valid(self) -> bool:
         if self.subject is None or not self.attributes:
+            return False
+        
+        # Relay state JWT check
+        try:
+            payload = jwt.decode(self.relay_state, self.sp.public_key, algorithms=["RS256"], options={"require": ["exp", "iat"]})
+            if not payload.get("sp_entity_id") == self.sp.entity_id:
+                return False
+            if not payload.get("idp_entity_id") == self.idp.entity_id:
+                return False
+            if not self.in_response_to or payload.get("request_id") != self.in_response_to:
+                return False
+        except Exception as e:
             return False
 
         # Signature validation

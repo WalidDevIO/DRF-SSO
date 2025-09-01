@@ -22,8 +22,8 @@ class SAMLSP:
     def get_login_request(self, binding: Binding = Binding.HTTP_REDIRECT) -> tuple[str, str, AuthnRequest]:
         return create_authn_request(self.sp, self.idp, binding)
 
-    def parse_response(self, b64_response: str) -> SAMLResponse:
-        return SAMLResponse(b64_response, self.sp, self.idp)
+    def parse_response(self, b64_response: str, relay_state=None) -> SAMLResponse:
+        return SAMLResponse(b64_response, self.sp, self.idp, relay_state=relay_state)
 
     def get_metadata_xml(self, binding: Binding = Binding.HTTP_POST) -> str:
         from .metadata import generate_metadata
