@@ -45,6 +45,7 @@ class SAMLResponse:
             self.session_index = authn_stmt.attrib.get("SessionIndex")
 
     def is_valid(self) -> bool:
+        # Basic checks
         if self.subject is None or not self.attributes:
             return False
         
@@ -59,12 +60,17 @@ class SAMLResponse:
                 return False
         except Exception as e:
             return False
+        
+        # Conditions validation
+        if not self._validate_condition():
+            return False
 
         # Signature validation
         if self.sp.want_assertions_signed:
             if not XmlSignUtils.verify(self.xml.decode(), self.idp):
                 return False
-
+    
+    def _validate_condition(self) -> bool:
         now = datetime.now(timezone.utc)
         not_before = self.conditions.get("not_before")
         not_on_or_after = self.conditions.get("not_on_or_after")
