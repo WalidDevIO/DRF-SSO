@@ -16,6 +16,10 @@ from drf_sso.handover import handover_from_user
 from drf_sso.settings import api_settings
 from drf_sso.exception import PopulationException
 
+from logging import getLogger
+
+logger = getLogger(__name__)
+
 def import_function(path: str):
     module_path, function_name = path.rsplit('.', 1)
     module = import_module(module_path)
@@ -55,6 +59,10 @@ class AuthProvider(ABC):
             except PopulationException as e:
                 handover = ""
                 query_params['err'] = e.details
+            except Exception as e:
+                handover = ""
+                query_params['err'] = "Impossible de se connecter. Veuillez réessayer plus tard."
+                logger.exception("Erreur lors de la population de l'utilisateur: %s", e)
                 
             return redirect(f"{self.frontend_url}/{handover}?{urlencode(query_params)}")
         
