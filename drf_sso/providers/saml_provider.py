@@ -1,11 +1,9 @@
 from .auth_provider import AuthProvider
 from rest_framework.decorators import api_view, permission_classes
-from drf_sso.handover import handover_from_user
 from django.shortcuts import redirect
 from django.urls import path
 from rest_framework.permissions import AllowAny
 from .samlsp import SAMLSP
-from drf_sso.exception import PopulationException
 
 class SAMLProvider(AuthProvider):
     def __init__(self, title: str, name: str, conf: dict):
@@ -13,7 +11,7 @@ class SAMLProvider(AuthProvider):
         self._init_provider_api(conf["config"])
         
     def _init_provider_api(self, config: dict):
-        config["sp"]["acs_url"] = f"{self.base_url}acs/"
+        config["sp"]["acs_url"] = f"{self.base_url}callback/"
         self.provider = SAMLSP(config["sp"], config["idp_meta_url"])
         
     def get_routes(self):
@@ -23,21 +21,7 @@ class SAMLProvider(AuthProvider):
             (_, url, _) = self.provider.get_login_request()
             return redirect(url)
         
-        @api_view(["POST"])
-        @permission_classes([AllowAny])     
-        def callback_view(request):
-            payload = self.validate_response(request)
-            #Création/Maj utilisateur
-            try:
-                user = self.populate_user(payload, self.name)
-                #Création du token de handover
-                handover = handover_from_user(user)
-            except PopulationException as e:
-                handover = "err:" + e.details
-            return redirect(f"{self.frontend_url}/{handover}")
-        
-        return [
-            path(f"{self.name}/acs/", callback_view, name=f"sso-{self.name}-validate"),
+        return super().get_routes() + [
             path(f"{self.name}/login/", login_view, name=f"sso-{self.name}-login")
         ]
     

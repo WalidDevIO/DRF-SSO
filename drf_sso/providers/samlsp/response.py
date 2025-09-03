@@ -69,6 +69,8 @@ class SAMLResponse:
         if self.sp.want_assertions_signed:
             if not XmlSignUtils.verify(self.xml.decode(), self.idp):
                 return False
+            
+        return True
     
     def _validate_condition(self) -> bool:
         now = datetime.now(timezone.utc)
