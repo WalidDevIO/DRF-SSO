@@ -2,6 +2,7 @@ import uuid
 import zlib
 import base64
 import jwt
+from django.conf import settings
 from datetime import datetime
 from urllib.parse import urlencode
 
@@ -44,8 +45,8 @@ class AuthnRequest:
                 "iat": now,
                 "exp": now + 120,
             },
-            key=self.sp.private_key,
-            algorithm="RS256"
+            key=settings.SECRET_KEY,
+            algorithm="HS256"
         )
 
     def _build_xml(self) -> str:

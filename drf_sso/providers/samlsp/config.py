@@ -40,7 +40,6 @@ class SPConfig:
         self.sls_url = data.get("sls_url")
         self.signing_cert_path = Path(data["signing_cert"])
         self.private_key_path = Path(data["private_key"])
-        self.public_key_path = Path(data["public_key"]) #TODO: Extract from signing_cert?
         self.want_assertions_signed = data.get("want_assertions_signed", True)
         self.authn_requests_signed = data.get("authn_requests_signed", True)
         self.digest_method = data.get("digest_method", DigestAlgorithm.SHA256)
@@ -48,7 +47,6 @@ class SPConfig:
 
         self.signing_cert = self.signing_cert_path.read_text()
         self.private_key = self.private_key_path.read_text()
-        self.public_key = self.public_key_path.read_text()
 
     @classmethod
     def from_file(cls, path: Path):

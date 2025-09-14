@@ -4,12 +4,11 @@ provider_conf = {
     "type": "saml",
     "config": {
         "sp": {
-            "entity_id": "https://daccib-api.genavir.dev",
-            "signing_cert": "test/saml/conf/certs/cert.pem",
-            "private_key": "test/saml/conf/certs/key.pem",
-            "public_key": "test/saml/conf/certs/key.pub"
+            "entity_id": "https://localhost:8000",
+            "signing_cert": "test/saml/conf/certs/localhost.pem",
+            "private_key": "test/saml/conf/certs/localhost-key.pem",
         },
-        "idp_meta_url": "https://idp-notilus.ifremer.fr/idp/metadata",
+        "idp_meta_url": "https://mocksaml.com/api/saml/metadata",
     }
 }
 

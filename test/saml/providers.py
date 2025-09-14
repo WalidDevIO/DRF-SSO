@@ -14,5 +14,5 @@ CERTS_DIR = CONF_DIR / "certs"
 
 SP = SPConfig.from_file(CONF_DIR / "sp_config.json")
 
-IDP = IdPConfig.from_url("https://idp-notilus.ifremer.fr/idp/metadata")
+IDP = IdPConfig.from_url("https://mocksaml.com/api/saml/metadata")
 SAMLSP = _SAMLSP(SP, IDP)

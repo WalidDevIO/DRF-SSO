@@ -10,3 +10,5 @@ INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.sessions",
 ]
+
+SECRET_KEY = "drf-sso-insecure-test@d56s$µfezq9rY#!fe"

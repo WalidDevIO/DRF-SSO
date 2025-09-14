@@ -1,7 +1,7 @@
 import base64
 import jwt
 import lxml.etree as ET
-from pathlib import Path
+from django.conf import settings
 from typing import Optional
 from datetime import datetime, timezone
 from .config import NAMESPACES, SPConfig, IdPConfig
@@ -51,7 +51,7 @@ class SAMLResponse:
         
         # Relay state JWT check
         try:
-            payload = jwt.decode(self.relay_state, self.sp.public_key, algorithms=["RS256"], options={"require": ["exp", "iat"]})
+            payload = jwt.decode(self.relay_state, settings.SECRET_KEY, algorithms=["HS256"], options={"require": ["exp", "iat"]})
             if not payload.get("sp_entity_id") == self.sp.entity_id:
                 return False
             if not payload.get("idp_entity_id") == self.idp.entity_id:
