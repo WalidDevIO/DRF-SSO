@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "drf-sso-dev-internal"
+name = "drf-sso"
 version = "0.0.2b3"
-description = "Django DRF module for SSO authentication using CAS, OIDC, SAML, etc. Under development, use at your own risks"
+description = "Django DRF module for SSO authentication using CAS, OIDC, SAML, etc."
 authors = [
   { name = "EL OUAZIZI Walid", email = "contact@walidlab.dev" }
 ]
