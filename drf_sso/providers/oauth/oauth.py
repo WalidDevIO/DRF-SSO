@@ -18,7 +18,7 @@ class OAuthImpl:
         self.redirect_uri = conf['redirect_uri']
         self.user_info_url = conf['user_info_url']
         self.scopes = conf.get('scopes', ['openid', 'profile', 'email'])
-        self.extra_authorzation = conf.get('extra_authorization', None)
+        self.extra_authorization = conf.get('extra_authorization', None)
         
     def get_login_url(self):
         params = {
@@ -27,8 +27,8 @@ class OAuthImpl:
             "scope": " ".join(self.scopes),
             "response_type": "code",
         }
-        if self.extra_authorzation is not None:
-            params.append(self.extra_authorzation)
+        if self.extra_authorization is not None:
+            params.update(self.extra_authorization)
         return f"{self.authorization_url}?{urlencode(params)}"
     
     def exchange_code(self, code: str):
